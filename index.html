@@ -6,9 +6,10 @@
     <title>NeoVai | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <style>
         body { background-color: #000; color: #fff; margin: 0; overflow-x: hidden; font-family: 'Inter', sans-serif; }
-        #canvas-container { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; }
+        #canvas-container { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
         
         .glass { 
             background: rgba(255, 255, 255, 0.015); 
@@ -30,9 +31,7 @@
             background: rgba(255, 255, 255, 0.03);
         }
         .tech-tag:hover { 
-            background: #fff; 
-            color: #000; 
-            transform: translateY(-2px); 
+            background: #fff; color: #000; transform: translateY(-2px); 
             box-shadow: 0 10px 20px rgba(255,255,255,0.1);
         }
 
@@ -41,7 +40,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         canvas { display: block; }
     </style>
 </head>
@@ -56,7 +54,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
                     <div>
                         <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-6 neo-title uppercase">NEOVAI</h1>
-                        <p class="text-xs uppercase tracking-[0.4em] text-white/40 font-light mb-2">
+                        <p class="text-[10px] uppercase tracking-[0.4em] text-white/40 font-light mb-2">
                             AI for productivity, not for VibeCoding
                         </p>
                         <div class="flex gap-4 text-[10px] font-mono text-white/60">
@@ -64,10 +62,9 @@
                             <span>[ EN ]</span>
                         </div>
                     </div>
-                    <div class="flex flex-col items-end gap-2">
+                    <div class="flex flex-col items-end gap-2 text-right">
                         <a href="https://github.com/neo-vai" target="_blank" class="group flex items-center gap-3 text-sm font-bold tracking-widest border-b border-white/20 pb-1 hover:border-white transition-all">
-                            GITHUB
-                            <span class="group-hover:translate-x-1 transition-transform">→</span>
+                            GITHUB <span class="group-hover:translate-x-1 transition-transform">→</span>
                         </a>
                     </div>
                 </div>
@@ -127,9 +124,7 @@
         </div>
     </main>
 
-    <script type="module">
-        import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
-
+    <script>
         let scene, camera, renderer, points;
 
         function init() {
@@ -178,16 +173,14 @@
         }
 
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
         });
 
-        if (document.readyState === 'complete') {
-            init();
-        } else {
-            window.addEventListener('load', init);
-        }
+        window.onload = init;
     </script>
 </body>
 </html>
